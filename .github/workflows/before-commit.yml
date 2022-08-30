@@ -1,0 +1,20 @@
+name: before-commit
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  before-commit:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3.0.2
+
+    - name: Run before-commit
+      uses: before-commit/run-action@v2.0.3

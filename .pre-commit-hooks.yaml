@@ -1,0 +1,6 @@
+- id: check-include-guards
+  name: check include guards
+  entry: check-include-guards
+  description: Cheks for unique relative named C header include guards
+  types_or: [c, c++]
+  language: python
