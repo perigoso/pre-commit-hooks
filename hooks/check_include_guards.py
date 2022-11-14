@@ -11,12 +11,13 @@ DEF_PATTERN = b'#define '
 ENDIF_PATTERN = b'#endif'
 
 
-def fix_include_guard(filename: str, relative_to: str = None, edit_in_place: bool = False) -> int:
+def check_include_guard(filename: str, relative_to: str = None, edit_in_place: bool = False) -> int:
     include_guard = None
     include_guard_start = None
     include_guard_end = None
     need_fix = False
 
+    # Read as binary so we can read byte-by-byte
     with open(filename, 'rb+') as file_obj:
 
         i1, line1 = None, None
@@ -93,8 +94,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     for filename in args.filenames:
         if filename.endswith('.h'):
-            # Read as binary so we can read byte-by-byte
-            retv |= fix_include_guard(
+            retv |= check_include_guard(
                 filename, args.relative_path, args.edit_in_place,
             )
 
