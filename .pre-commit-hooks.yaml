@@ -4,3 +4,10 @@
   description: Cheks for unique relative named C header include guards
   types_or: [c, c++]
   language: python
+
+- id: check-hex-case
+  name: check hex case
+  entry: check-hex-case
+  description: Checks and fixes hex number declarion case, as in upper/lower
+  types_or: [c, c++]
+  language: python
