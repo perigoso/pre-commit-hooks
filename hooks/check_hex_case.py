@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 # SPDX-FileCopyrightText: 2022 Rafael Silva <perigoso@riseup.net>
 import argparse
+import difflib
 import re
 from functools import partial
 from typing import Sequence
@@ -33,10 +34,18 @@ def check_hex_case(filename: str, edit_in_place: bool = False, upper_preffix: bo
     )
 
     if replace_count != 0 and contents != new_contents:
-        print(f'{replace_count} hexes were fixed')
+
+        diff = difflib.unified_diff(
+            contents.splitlines(
+            ), new_contents.splitlines(), fromfile=filename,
+        )
+        for line in diff:
+            print(line)
+
         if edit_in_place:
             with open(filename, 'w') as f:
                 f.write(new_contents)
+
         return 1
 
     return 0
