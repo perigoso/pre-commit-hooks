@@ -6,7 +6,7 @@
   language: python
 - id: check-hex-case
   name: check hex case
-  entry: check-hex-case
+  entry: check-hex-case -i
   description: Checks and fixes hex number declarion case, as in upper/lower
   types_or: [c, c++]
   language: python

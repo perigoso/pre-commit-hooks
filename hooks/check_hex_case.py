@@ -2,9 +2,10 @@
 # SPDX-License-Identifier: MIT
 # SPDX-FileCopyrightText: 2022 Rafael Silva <perigoso@riseup.net>
 import argparse
+import difflib
 import re
 from functools import partial
-from typing import Sequence
+# from typing import Sequence
 
 HEXNUM_RE = r'0x[0-9a-f]+'
 
@@ -33,16 +34,24 @@ def check_hex_case(filename: str, edit_in_place: bool = False, upper_preffix: bo
     )
 
     if replace_count != 0 and contents != new_contents:
-        print(f'{replace_count} hexes were fixed')
+
         if edit_in_place:
             with open(filename, 'w') as f:
                 f.write(new_contents)
+        else:
+            diff = difflib.unified_diff(
+                contents.splitlines(), new_contents.splitlines(), fromfile=filename,
+            )
+            for line in diff:
+                print(line)
+
         return 1
 
     return 0
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+# def main(argv: Sequence[str] | None = None) -> int:
+def main(argv=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-i', '--edit-in-place',
