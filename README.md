@@ -37,3 +37,7 @@ Flags can be used to change this bahaviour (`0X55AA`, `0x55aa`, `0X55aa`):
 
 - Set preffix to upper case with `args: ['--upper-preffix']`
 - Set digits to lower case with `args: ['--lower-digits']`
+
+#### `check-accidental-assignment`
+
+Checks for accidental assignments inside parentheses, and errors when found
