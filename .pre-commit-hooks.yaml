@@ -10,3 +10,9 @@
   description: Checks and fixes hex number declarion case, as in upper/lower
   types_or: [c, c++]
   language: python
+- id: check-accidental-assignment
+  name: check accidental assignment
+  entry: check-accidental-assignment
+  description: Checks for accidental assignments inside parentheses, and errors when found
+  types_or: [c, c++]
+  language: python
