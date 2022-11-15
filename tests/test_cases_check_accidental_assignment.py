@@ -5,19 +5,19 @@ test_cases = [
         'control', True, {'strict': True}, '''
     int a = 0;
 ''',
-        ),
+    ),
 
     (
         'strict', True, {'strict': False}, '''
     (a = 0) ? 1 : 2;
 ''',
-        ),
+    ),
 
     (
         'strict', False, {'strict': True}, '''
     (a = 0) ? 1 : 2;
 ''',
-        ),
+    ),
 
     (
         'skip-keyword', True, {}, '''
@@ -71,7 +71,7 @@ int main(void)
         /* code */
     }
 ''',
-        ),
+    ),
 
     (
         'cpp-comment', True, {},
