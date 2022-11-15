@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # SPDX-License-Identifier: MIT
 # SPDX-FileCopyrightText: 2022 Rafael Silva <perigoso@riseup.net>
+from __future__ import annotations
+
+from typing import Sequence
 import argparse
 import re
-from typing import Sequence
 
 
 IFNOTDEF_PATTERN = b'#ifndef '  # b'#if !defined'
