@@ -10,7 +10,8 @@ LINE_INDEX = 0
 CHAR_INDEX = 1
 
 
-def find_parens(lines: list[str]) -> None: # yields (start, end, string, keyword) -> list[tuple[tuple[int, int], tuple[int, int], str, str]]
+# yields (start, end, string, keyword) -> list[tuple[tuple[int, int], tuple[int, int], str, str]]
+def find_parens(lines: list[str]) -> None:
 
     start = (0, 0)
     end = (0, 0)
@@ -32,7 +33,8 @@ def find_parens(lines: list[str]) -> None: # yields (start, end, string, keyword
                     if line[index+1] == '/':
                         # end of cpp comment
                         inside_cpp_comment = False
-                        next(char_enum) # skip next char (the '/'), prevent from being added to match
+                        # skip next char (the '/'), prevent from being added to match
+                        next(char_enum)
                 continue
 
             if char == '/' and index < len(line) - 1:
@@ -42,7 +44,8 @@ def find_parens(lines: list[str]) -> None: # yields (start, end, string, keyword
                 if line[index+1] == '*':
                     # cpp comment start
                     inside_cpp_comment = True
-                    next(char_enum) # skip next char (the '*') prevent early comment end
+                    # skip next char (the '*') prevent early comment end
+                    next(char_enum)
                     continue
 
             # check for strings
@@ -71,7 +74,9 @@ def find_parens(lines: list[str]) -> None: # yields (start, end, string, keyword
                     end = (line_no, index)
 
                     # get keyword
-                    keyword = lines[start[LINE_INDEX]][:start[CHAR_INDEX]-1].split()
+                    keyword = lines[
+                        start[LINE_INDEX]
+                    ][:start[CHAR_INDEX]-1].split()
                     if keyword:
                         keyword = keyword.pop().strip()
                     else:
@@ -140,7 +145,11 @@ def red_text(text: str) -> str:
     return f'\033[31m{text}\033[0m'
 
 
-def check_accidental_assignment(filename: str, strict: bool = False, ignore_keywords: list[str] | None = None, quiet: bool = False) -> int:
+def check_accidental_assignment(
+        filename: str, strict: bool = False,
+        ignore_keywords: list[str] | None = None,
+        quiet: bool = False,
+) -> int:
     with open(filename) as f:
         contents = f.read()
 
@@ -161,16 +170,23 @@ def check_accidental_assignment(filename: str, strict: bool = False, ignore_keyw
                 post_stub = lines[end[LINE_INDEX]][end[CHAR_INDEX]:]
 
                 if start[LINE_INDEX] == end[LINE_INDEX]:
-                    content_stub = lines[start[LINE_INDEX]][start[CHAR_INDEX]:end[CHAR_INDEX]]
+                    content_stub = lines[
+                        start[LINE_INDEX]
+                    ][start[CHAR_INDEX]:end[CHAR_INDEX]]
                 else:
-                    content_stub = lines[start[LINE_INDEX]][start[CHAR_INDEX]:] + '\n'
+                    content_stub = lines[
+                        start[LINE_INDEX]
+                    ][start[CHAR_INDEX]:] + '\n'
                     for line in lines[start[LINE_INDEX]+1:end[LINE_INDEX]]:
                         content_stub += line + '\n'
                     content_stub += lines[end[LINE_INDEX]][:end[CHAR_INDEX]]
 
                 print(
-                    f'{filename}:{line_no}:{char_no}: {red_text("error:")} assignment inside parentheses:')
-                print(f'{line_no:5d} | {pre_stub}{red_text(content_stub)}{post_stub}')
+                    f'{filename}:{line_no}:{char_no}: {red_text("error:")} assignment inside parentheses:',
+                )
+                print(
+                    f'{line_no:5d} | {pre_stub}{red_text(content_stub)}{post_stub}',
+                )
             retv = 1
 
     return retv
@@ -179,13 +195,16 @@ def check_accidental_assignment(filename: str, strict: bool = False, ignore_keyw
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--strict', action='store_true', help='strictly check, i.e. check for assignment in all parentheses found, default is to check on if/while/for/switch',
+        '--strict', action='store_true',
+        help='strictly check, i.e. check for assignment in all parentheses found, default is to check on if/while/for/switch',
     )
     parser.add_argument(
         '--quiet', action='store_true', help='quiet, no prints',
     )
-    parser.add_argument('-s', '--skip-keywords', nargs='+',
-                        help='keywords preciding parentheses to ignore')
+    parser.add_argument(
+        '-s', '--skip-keywords', nargs='+',
+        help='keywords preciding parentheses to ignore',
+    )
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
 
@@ -193,7 +212,8 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     for filename in args.filenames:
         retv |= check_accidental_assignment(
-            filename, args.strict, args.skip_keywords)
+            filename, args.strict, args.skip_keywords,
+        )
 
     return retv
 

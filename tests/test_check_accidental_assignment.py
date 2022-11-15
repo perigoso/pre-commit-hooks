@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import unittest
-from typing import Sequence
 
 from hooks.check_accidental_assignment import check_accidental_assignment
 from tests.test_cases_check_accidental_assignment import test_cases
@@ -21,7 +20,9 @@ class TestCheckAccidentalAssignment(unittest.TestCase):
             with open('tempfile', 'w') as f:
                 f.write(input)
 
-            result = check_accidental_assignment('tempfile', quiet=True, **args) == 0
+            result = check_accidental_assignment(
+                'tempfile', quiet=True, **args,
+            ) == 0
 
             if result != expected:
                 failed = True
