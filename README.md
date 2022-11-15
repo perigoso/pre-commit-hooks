@@ -41,3 +41,7 @@ Flags can be used to change this bahaviour (`0X55AA`, `0x55aa`, `0X55aa`):
 #### `check-accidental-assignment`
 
 Checks for accidental assignments inside parentheses, and errors when found
+
+- Check for assignment in all parentheses found (defaults to if/while/for/switch only) `args: ['--strict']`
+- Fail silently without printing to terminal `args: ['--quiet']`
+- Skip checking parentheses whose keyword is on list `args: ['--skip-keywords while for printf']`
