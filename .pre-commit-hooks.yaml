@@ -1,13 +1,13 @@
 - id: check-include-guards
   name: check include guards
   entry: check-include-guards
-  description: Cheks for unique relative named C header include guards
+  description: Checks for unique relative named C header include guards
   types_or: [c, c++]
   language: python
 - id: check-hex-case
   name: check hex case
   entry: check-hex-case -i
-  description: Checks and fixes hex number declarion case, as in upper/lower
+  description: Checks and fixes hex number declaration case, as in upper/lower
   types_or: [c, c++]
   language: python
 - id: check-accidental-assignment
