@@ -117,10 +117,30 @@ def check_parens_content(string: str, keyword: str, strict: bool = False) -> boo
         string = string.split(';')[1]
 
     inside_string = False
+    inside_cpp_comment = False
 
     # check for assignment
     string_enum = enumerate(string)
     for index, char in string_enum:
+        # check for comments
+        if inside_cpp_comment:
+            if char == '*' and index < len(string) - 1:
+                if string[index+1] == '/':
+                    # end of cpp comment
+                    inside_cpp_comment = False
+                    # skip next char (the '/')
+                    next(string_enum)
+            continue
+
+        if char == '/' and index < len(string) - 1:
+            if string[index+1] == '*':
+                # cpp comment start
+                inside_cpp_comment = True
+                # skip next char (the '*') prevent early comment end
+                next(string_enum)
+                continue
+
+        # check for strings
         if char == '"':
             inside_string = not inside_string
             continue
