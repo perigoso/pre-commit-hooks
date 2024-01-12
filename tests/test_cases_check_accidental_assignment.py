@@ -309,6 +309,20 @@ int main(void)
     ),
 
     (
+        'single-quote-string', True, {'strict': True},
+        '''
+    print(char == '=');
+''',
+    ),
+
+    (
+        'single-quote-string', True, {'strict': True},
+        '''
+    print('\x04' == char);
+''',
+    ),
+
+    (
         'line-breaks', False, {'strict': True},
         '''
     return ((i
