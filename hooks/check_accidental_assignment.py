@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2022 Rafael Silva <perigoso@riseup.net>
+# SPDX-FileCopyrightText: 2022-2023 Rafael Silva <perigoso@riseup.net>
 from __future__ import annotations
 
 import argparse
@@ -54,6 +54,17 @@ def find_parens(lines: list[str]) -> None:
                 continue
 
             if inside_string:
+                continue
+
+            if char == '\'':
+                assert(index < len(line) - 2, 'Unexpected end of line before end of single char string: ' + line)
+                if line[index+1] == '\\':
+                    assert(index < len(line) - 3, 'Unexpected end of line before end of single char string: ' + line)
+                    # escaped char, skip escape
+                    next(char_enum)
+                # skip single char string and the end of single char string
+                next(char_enum)
+                next(char_enum)
                 continue
 
             # search for parentheses
