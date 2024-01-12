@@ -119,12 +119,28 @@ def check_parens_content(string: str, keyword: str, strict: bool = False) -> boo
     inside_string = False
 
     # check for assignment
-    for index, char in enumerate(string):
+    string_enum = enumerate(string)
+    for index, char in string_enum:
         if char == '"':
             inside_string = not inside_string
             continue
 
-        if not inside_string and char == '=':
+        if inside_string:
+            continue
+
+        if char == '\'':
+            assert(index < len(string) - 2, 'Unexpected end of line before end of single char string: ' + string)
+            if string[index+1] == '\\':
+                assert(index < len(string) - 2, 'Unexpected end of line before end of single char string: ' + string)
+                # escaped char, skip escape
+                next(string_enum)
+            # skip single char string and the end of single char string
+            next(string_enum)
+            next(string_enum)
+            continue
+
+        # check for assignment
+        if char == '=':
             if index != 0:
                 preciding_char = string[index-1]
                 if preciding_char in ['=', '!']:
