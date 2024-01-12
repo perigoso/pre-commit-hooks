@@ -19,6 +19,7 @@ def find_parens(lines: list[str]) -> None:
 
     inside_cpp_comment = False
     inside_string = False
+    inside_single_char_string = False
     match = ''
 
     # iterate over character over lines
@@ -49,25 +50,21 @@ def find_parens(lines: list[str]) -> None:
                     continue
 
             # check for strings
-            if char == '"':
-                if index > 0 and line[index-1] == '\\':
+            if not inside_single_char_string and char == '"':
+                if inside_string and index > 0 and line[index-1] == '\\':
                     # escaped double quote
                     continue
                 inside_string = not inside_string
                 continue
 
-            if inside_string:
+            if not inside_string and char == '\'':
+                if inside_single_char_string and index > 0 and line[index-1] == '\\':
+                    # escaped single quote
+                    continue
+                inside_single_char_string = not inside_single_char_string
                 continue
 
-            if char == '\'':
-                assert(index < len(line) - 2, 'Unexpected end of line before end of single char string: ' + line)
-                if line[index+1] == '\\':
-                    assert(index < len(line) - 3, 'Unexpected end of line before end of single char string: ' + line)
-                    # escaped char, skip escape
-                    next(char_enum)
-                # skip single char string and the end of single char string
-                next(char_enum)
-                next(char_enum)
+            if inside_single_char_string or inside_string:
                 continue
 
             # search for parentheses
@@ -120,6 +117,7 @@ def check_parens_content(string: str, keyword: str, strict: bool = False) -> boo
         string = string.split(';')[1]
 
     inside_string = False
+    inside_single_char_string = False
     inside_cpp_comment = False
 
     # check for assignment
@@ -144,25 +142,21 @@ def check_parens_content(string: str, keyword: str, strict: bool = False) -> boo
                 continue
 
         # check for strings
-        if char == '"':
-            if index > 0 and string[index-1] == '\\':
+        if not inside_single_char_string and char == '"':
+            if inside_string and index > 0 and string[index-1] == '\\':
                 # escaped double quote
                 continue
             inside_string = not inside_string
             continue
 
-        if inside_string:
+        if not inside_string and char == '\'':
+            if inside_single_char_string and index > 0 and string[index-1] == '\\':
+                # escaped single quote
+                continue
+            inside_single_char_string = not inside_single_char_string
             continue
 
-        if char == '\'':
-            assert(index < len(string) - 2, 'Unexpected end of line before end of single char string: ' + string)
-            if string[index+1] == '\\':
-                assert(index < len(string) - 2, 'Unexpected end of line before end of single char string: ' + string)
-                # escaped char, skip escape
-                next(string_enum)
-            # skip single char string and the end of single char string
-            next(string_enum)
-            next(string_enum)
+        if inside_single_char_string or inside_string:
             continue
 
         # check for assignment
