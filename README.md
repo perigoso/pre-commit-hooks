@@ -35,7 +35,7 @@ Checks for and fixes hex number declaration case, as in upper/lower.
 By default it fixes hex number declarations to lower case prefix, upper case digits (`0x55AA`)
 Flags can be used to change this behavior (`0X55AA`, `0x55aa`, `0X55aa`):
 
-- Set preffix to upper case with `args: ['--upper-preffix']`
+- Set prefix to upper case with `args: ['--upper-prefix']`
 - Set digits to lower case with `args: ['--lower-digits']`
 
 #### `check-accidental-assignment`

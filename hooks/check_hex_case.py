@@ -59,7 +59,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         action='store_true', help='fix include guards',
     )
     parser.add_argument(
-        '--upper-preffix', action='store_true', help='hex prefix in upper case (default: lower)',
+        '--upper-prefix', action='store_true', help='hex prefix in upper case (default: lower)',
     )
     parser.add_argument(
         '--lower-digits', action='store_false', help='hex digits in lower case (default: upper)',
@@ -72,7 +72,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     for filename in args.filenames:
         retv |= check_hex_case(
             filename, args.edit_in_place,
-            args.upper_preffix, args.lower_digits,
+            args.upper_prefix, args.lower_digits,
         )
 
     return retv
