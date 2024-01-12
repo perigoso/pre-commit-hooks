@@ -31,9 +31,9 @@ Naming is the file path relative to a specific directory, all upper case, with n
 
 #### `check-hex-case`
 
-Checks for Checks and fixes hex number declarion case, as in upper/lower.
+Checks for and fixes hex number declaration case, as in upper/lower.
 By default it fixes hex number declarations to lower case prefix, upper case digits (`0x55AA`)
-Flags can be used to change this bahaviour (`0X55AA`, `0x55aa`, `0X55aa`):
+Flags can be used to change this behavior (`0X55AA`, `0x55aa`, `0X55aa`):
 
 - Set preffix to upper case with `args: ['--upper-preffix']`
 - Set digits to lower case with `args: ['--lower-digits']`
