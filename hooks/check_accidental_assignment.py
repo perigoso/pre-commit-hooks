@@ -50,6 +50,9 @@ def find_parens(lines: list[str]) -> None:
 
             # check for strings
             if char == '"':
+                if index > 0 and line[index-1] == '\\':
+                    # escaped double quote
+                    continue
                 inside_string = not inside_string
                 continue
 
@@ -142,6 +145,9 @@ def check_parens_content(string: str, keyword: str, strict: bool = False) -> boo
 
         # check for strings
         if char == '"':
+            if index > 0 and string[index-1] == '\\':
+                # escaped double quote
+                continue
             inside_string = not inside_string
             continue
 
