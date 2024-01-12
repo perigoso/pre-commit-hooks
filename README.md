@@ -11,7 +11,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ```yaml
 -   repo: https://github.com/perigoso/pre-commit-hooks
-    rev: v0.2  # Use the ref you want to point at
+    rev: v0.3  # Use the ref you want to point at
     hooks:
     - id: check-hex-case
     #   ...
