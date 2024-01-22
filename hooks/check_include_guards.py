@@ -20,7 +20,7 @@ def check_include_guard(filename: str, relative_to: str = None, edit_in_place: b
     need_fix = False
 
     # Read as binary so we can read byte-by-byte
-    with open(filename, 'rb+') as file_obj:
+    with open(filename, 'rb+', encoding='utf-8') as file_obj:
 
         i1, line1 = None, None
         for i2, line2 in enumerate(file_obj, start=1):
