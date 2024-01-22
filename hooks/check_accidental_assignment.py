@@ -197,7 +197,7 @@ def check_accidental_assignment(
         ignore_keywords: list[str] | None = None,
         quiet: bool = False,
 ) -> int:
-    with open(filename) as f:
+    with open(filename, encoding='utf-8') as f:
         contents = f.read()
 
     lines = contents.splitlines()
