@@ -24,7 +24,7 @@ def match_fix_hex(match_object, upper_preffix: bool = False, upper_digits: bool 
 
 
 def check_hex_case(filename: str, edit_in_place: bool = False, upper_preffix: bool = False, upper_digits: bool = True) -> int:
-    with open(filename) as f:
+    with open(filename, encoding='utf-8') as f:
         contents = f.read()
 
     match_callback = partial(
